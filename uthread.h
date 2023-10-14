@@ -32,6 +32,7 @@ struct uthread {
   struct context context;
   enum thread_state state;
   const char *name;
+  void *arg;
 };
 
 /// @brief 初始化系统，在main函数开始时调用
@@ -55,6 +56,37 @@ long long uthread_yield();
 
 /// @brief 销毁线程的结构体
 /// @param tcb 线程的控制块q
-void thread_destory(struct uthread *tcb);
+void thread_destroy(struct uthread *tcb);
+
+// Define the node
+typedef struct QueueNode {
+    struct uthread* data;
+    struct QueueNode* next;
+} QueueNode;
+
+// Define the queue
+typedef struct {
+    QueueNode* front;
+    QueueNode* rear;
+} Queue;
+
+/// @brief Create an empty queue
+/// @return The pointer to the queue
+Queue* createQueue();
+
+/// @brief Enqueue an element to the queue
+/// @param queue The pointer to the queue
+/// @param data The data to be enqueued
+void enqueue(Queue* queue, struct uthread *data);
+
+/// @brief Dequeue an element from the queue
+/// @param queue The pointer to the queue
+/// @return The data dequeued from the queue
+struct uthread* dequeue(Queue* queue);
+
+/// @brief Check if the queue is empty
+/// @param queue The pointer to the queue
+/// @return 1 if the queue is empty, 0 otherwise
+int isQueueEmpty(Queue* queue);
 
 #endif
