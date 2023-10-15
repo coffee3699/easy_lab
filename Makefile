@@ -3,8 +3,8 @@ all: demo tests
 CFLAGS := -Wall -g -O0
 CC := gcc
 
-uthread.o: uthread.c 
-	$(CC) $(CFLAGS) -c $^ -o $@ 
+uthread.o: uthread.c
+	$(CC) $(CFLAGS) -c $^ -o $@
 switch.o: switch.S
 	$(CC) $(CFLAGS) -c $^ -o $@
 
@@ -13,7 +13,7 @@ simple : simple.c uthread.o switch.o
 
 pingpong : pingpong.c uthread.o switch.o
 	$(CC) $(CFLAGS) -o $@ $^
-	
+
 recursion : recursion.c uthread.o switch.o
 	$(CC) $(CFLAGS) -o $@ $^
 demo : demo.c switch.o

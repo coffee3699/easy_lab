@@ -1,7 +1,7 @@
 {
     "name": "C++ Development Container",
     "dockerFile": "Dockerfile",
-  
+
     "customizations": {
       "vscode": {
         "extensions": [
@@ -13,4 +13,3 @@
     },
     "runArgs": ["--privileged"]
   }
-  

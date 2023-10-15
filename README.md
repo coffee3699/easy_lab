@@ -37,7 +37,7 @@ long myfunc(long a, long b, long c, long d,
 
 栈是由**高地址向低地址**增长的。每次压栈，rsp = rsp - 8。
 
-在调用另一个函数时，首先编译器会把参数传入寄存器，当参数多于6个时，多余的参数会被放入栈中，例如上图的h，g。 
+在调用另一个函数时，首先编译器会把参数传入寄存器，当参数多于6个时，多余的参数会被放入栈中，例如上图的h，g。
 
 然后，执行call指令，跳转到函数，并在栈中保存函数地址。当进入新函数时，编译器会把%rbp压入栈中，然后把新的%rbp指向栈顶。
 
@@ -46,7 +46,7 @@ long myfunc(long a, long b, long c, long d,
 > 栈顶通常还会有一块red zone，但在linux中被忽略[[4]](#参考).。red zone通常用来作为函数临时数据的存放位置。[[5]](#参考)
 ## Calling Convention
 ![calling](img/calling.png)
-* 用户级应用程序依次用以下寄存器来传递参数：%rdi、%rsi、%rdx、%rcx、%r8 和 %r9（指的是参数为指针或者8字节以下的整数类型的一般情况）。 
+* 用户级应用程序依次用以下寄存器来传递参数：%rdi、%rsi、%rdx、%rcx、%r8 和 %r9（指的是参数为指针或者8字节以下的整数类型的一般情况）。
 > 在Windows x64中，%rdx,%rcx分别是第一个和第二参数的寄存器
 * %rax通常作为返回值寄存器
 * caller-saved表示调用者保存，callee-saved表示被调者保存。%rbx,%rsp,%rbp,%12-%15的寄存器均需要被调用者提前保存。调用结束后再恢复这些寄存器（如果有用到）。此外，还有一些上图未提及的寄存器需要保存，例如%rip,%xmm0还有一些标志寄存器等等。
@@ -56,7 +56,7 @@ long myfunc(long a, long b, long c, long d,
 下面简单介绍一下后面所用到的汇编代码。
 
 * `pop A`： 把原先rsp指针指的内存的值放到A中，然后rsp=rsp+8
-* `movq A B` : 
+* `movq A B` :
     * 其中(A) 表示把A当成指针，对A指向地址的内存
     * NUMBER(A),表示(A+NUMBER)，也就是A+NUMBER处的内存
 * `push A`: 把A的值放到原来rsp处，然后rsp=rsp-8
@@ -77,7 +77,7 @@ PS: github上的code space也可以用。但我没有测试过。
 
 ## 使用devcontainer
 ### 安装vscode
-[Windows](https://vscode.cdn.azure.cn/stable/1ad8d514439d5077d2b0b7ee64d2ce82a9308e5a/VSCodeUserSetup-x64-1.74.1.exe) 
+[Windows](https://vscode.cdn.azure.cn/stable/1ad8d514439d5077d2b0b7ee64d2ce82a9308e5a/VSCodeUserSetup-x64-1.74.1.exe)
 
 [Mac OS](https://vscode.cdn.azure.cn/stable/e8a3071ea4344d9d48ef8a4df2c097372b0c5161/VSCode-darwin-universal.zip)
 ### 安装dev container插件
@@ -85,7 +85,7 @@ PS: github上的code space也可以用。但我没有测试过。
 ![devcontainer](img/devcontainer.png)
 
 > 如果你在Windows下使用dev container的插件，并且安装了wsl，可能需要手动将插件版本等级降级到v0.266.1
-> 
+>
 > [参考](https://github.com/microsoft/vscode-remote-release/issues/8172)
 > ![downgrade](img/install_another_version.png)
 > 选择较低版本后，reload window即可。
@@ -146,7 +146,7 @@ git clone https://github.com/rust-real-time-os/easy_lab.git
 
 执行
 ```
-make 
+make
 ```
 即可编译uthread.c和所有测试。
 
@@ -196,7 +196,7 @@ address & -16L
 * `_uthread_entry`结束后，需要回到调度器，因此你需要调用thread_switch
 * 你可以使用全局`current_thread`和`main_thread`来保存当前执行的主线程和用户态线程的上下文。
 * 你可以使用gdb来调试bug
-## Challenge 
+## Challenge
 * thread_swtich里只保存了整数寄存器的上下文。如何拓展到浮点数？
 * 上面我们只实现了一个1 kthread :n uthread的模型，如何拓展成m : n的模型呢
 * 上述的实现是一个非抢占的调度器，如何实现抢占的调度呢？
@@ -216,5 +216,5 @@ address & -16L
 1. [AMD64 Architecture Programmer’s Manual, Volume 1: Application Programming.](https://www.scs.stanford.edu/05au-cs240c/lab/amd64/AMD64-1.pdf)
 2. [X86-64 Architecture Guide](http://6.s081.scripts.mit.edu/sp18/x86-64-architecture-guide.html)
 3. [mit 6.s081 user level thread](https://pdos.csail.mit.edu/6.S081/2020/labs/thread.html)
-4. [System V Application Binary Interface](https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf) 
+4. [System V Application Binary Interface](https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf)
 5. [Stack frame layout on x86-64](https://eli.thegreenplace.net/2011/09/06/stack-frame-layout-on-x86-64/)
