@@ -52,7 +52,7 @@ struct uthread *uthread_create(void (*func)(void *), void *arg,const char* threa
   /*
   TODO: 在这里初始化uthread结构体。可能包括设置rip,rsp等寄存器。入口地址需要是函数_uthread_entry.
         除此以外，还需要设置uthread上的一些状态，保存参数等等。
-        
+
         你需要注意rsp寄存器在这里要8字节对齐，否则后面从context switch进入其他函数的时候会有rsp寄存器
         不对齐的情况（表现为在printf里面Segment Fault）
   */
@@ -141,7 +141,7 @@ void uthread_resume(struct uthread *tcb) {
   TODO：调度器恢复到一个函数的上下文。
   */
   // printf("Resuming thread %d.\n", (int)(intptr_t)tcb->arg);
-  
+
   // Set the next thread's state to running
   tcb->state = THREAD_RUNNING;
 
