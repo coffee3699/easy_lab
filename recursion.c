@@ -14,7 +14,7 @@ long long factorial(int n)
 
 void test_func(void* _arg){
     int arg = (intptr_t ) _arg;
-    printf("%lld\n",factorial(arg));
+    printf("%lld",factorial(arg));
 }
 
 
